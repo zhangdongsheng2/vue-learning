@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VueHello</title>
+</head>
+<!--
+1. 引入vue.js
+2. 创建vue对象, 指定el 跟element选择器, 初始化data数据
+3. 双向绑定: v-model
+4. 显示数据: {{xxx}} 大括号表达式
+-->
+<body>
+<div id="hello">
+    <input type="text" v-model="msg">
+    <input type="text" v-model="msg">
+    <p>{{msg}}</p>
+</div>
+</body>
+<script src="../js/vue.js" type="text/javascript"></script>
+<script type="text/javascript">
+    const vm = new Vue({ //配置对象 options
+        el: '#hello', //element: 指定用vue来管理哪个标签区域
+        data: {
+            msg: 'nihao'
+        }
+    })
+</script>
+</html>
