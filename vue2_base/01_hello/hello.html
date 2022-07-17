@@ -54,12 +54,12 @@
 -->
 <body>
 <div id="hello">
-    <h1>1. Hello</h1>
+    <h1>一. Hello</h1>
     <input type="text" v-model="msg">
     <input type="text" v-model="msg">
     <p>{{msg}}</p>
 
-    <h1>2. 模板语法</h1>
+    <h1>二. 模板语法</h1>
     <h2>1. 双大括号表达式</h2>
     <p>{{content}}</p>
     <p>{{content.toUpperCase()}}</p>
@@ -70,7 +70,7 @@
     <button v-on:click="test">点我1</button>
     <button @click="test">点我2</button>
 
-    <h1>3. 计算属性和监视</h1>
+    <h1>三. 计算属性和监视</h1>
     姓: <input type="text" placeholder="First Name" v-model="firstName"><br/>
     名: <input type="text" placeholder="Last Name" v-model="lastName"><br/>
     姓名1(单向): <input type="text" placeholder="Full Name1" v-model="fullName1"><br/>
@@ -79,7 +79,7 @@
     <p>{{fullName1}}</p>
     <p>{{fullName1}}</p>
 
-    <h1>4. Class和Style绑定</h1>
+    <h1>四. Class和Style绑定</h1>
     <h2>1. class绑定</h2>
     <p :class="myClass">xxx是字符串</p>
     <p :class="{classA: hasClassA, classB:hasClassB}">xxx是对象</p>
@@ -89,7 +89,7 @@
     <p :style="{color: activeColor,fontSize}">style</p>
     <button @click="update">更新</button>
 
-    <h1>5. 条件渲染</h1>
+    <h1>五. 条件渲染</h1>
     <p>if</p>
     <p v-if="ok">条件成功</p>
     <p v-else>条件失败</p>
