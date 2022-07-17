@@ -3,18 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <title>VueHello</title>
+    <style>
+        .classA{
+            color: red;
+        }
+        .classB{
+            background: blue;
+        }
+        .classC{
+            font-size: 20px;
+        }
+    </style>
 </head>
 <!--
+============基础语法==================
 1. 引入vue.js
 2. 创建vue对象, 指定el 跟element选择器, 初始化data数据
 3. 双向绑定: v-model
-4. 显示数据: {{xxx}} 大括号表达式
+4. 显示数据: {{xxx}} 大括号表达式, 语法: {{exp}} 或 {{{exp}}}
+5. 模板语法: 大括号表达式, 指令(以v-开头的自定义标签属性)
+6. 强制数据绑定: 功能-指定变化的属性值,写法: v-bind:xxx='yyy' or :xxx='yyy' //yyy会作为表达式解析执行
+7. 事件绑定: 写法 v-on:click='xxx'  or  @click='xxx'
+
+==============计算属性=====================
+1. 计算属性: 在computed属性对象中定义计算属性的方法在页面中使用{{方法名}}来显示计算的结果
+2. 监视属性: 通过通过vm对象的$watch()或watch配置来监视指定的属性, 变化时, 回调函数调用.
+3. 计算属性高级: 通过getter/setter实现对属性数据的显示和监视, 计算属性存在缓存, 多次读取只执行一次getter计算
+
+==============class与style绑定=====================
+1. 理解
+  在应用界面中, 某个(些)元素的样式是变化的
+  class/style绑定就是专门用来实现动态样式效果的技术
+2. class绑定: :class='xxx'
+  xxx是字符串
+  xxx是对象
+  xxx是数组
+3. style绑定
+  :style="{ color: activeColor, fontSize: fontSize + 'px' }"
+  其中activeColor/fontSize是data属性
+
+==============条件渲染=====================
+1. 条件渲染指令
+  v-if
+  v-else
+  v-show
+2. 比较v-if与v-show
+  如果需要频繁切换 v-show 较好
+
+
 -->
 <body>
 <div id="hello">
+    <h1>1. Hello</h1>
     <input type="text" v-model="msg">
     <input type="text" v-model="msg">
     <p>{{msg}}</p>
+
+    <h1>2. 模板语法</h1>
+    <h2>1. 双大括号表达式</h2>
+    <p>{{content}}</p>
+    <p>{{content.toUpperCase()}}</p>
+    <h2>2. 强制数据绑定</h2>
+    <a v-bind:href="url">访问站点</a> :
+    <a :href="url">访问站点</a>
+    <h2>3. 绑定事件监听</h2>
+    <button v-on:click="test">点我1</button>
+    <button @click="test">点我2</button>
+
+    <h1>3. 计算属性和监视</h1>
+    姓: <input type="text" placeholder="First Name" v-model="firstName"><br/>
+    名: <input type="text" placeholder="Last Name" v-model="lastName"><br/>
+    姓名1(单向): <input type="text" placeholder="Full Name1" v-model="fullName1"><br/>
+    姓名2(单向): <input type="text" placeholder="Full Name2" v-model="fullName2"><br/>
+    姓名3(双向): <input type="text" placeholder="Full Name3" v-model="fullName3"><br/>
+    <p>{{fullName1}}</p>
+    <p>{{fullName1}}</p>
+
+    <h1>4. Class和Style绑定</h1>
+    <h2>1. class绑定</h2>
+    <p :class="myClass">xxx是字符串</p>
+    <p :class="{classA: hasClassA, classB:hasClassB}">xxx是对象</p>
+    <p :class="['classA','classB']">xxx是数组</p>
+
+    <h2>2. style绑定</h2>
+    <p :style="{color: activeColor,fontSize}">style</p>
+    <button @click="update">更新</button>
+
+    <h1>5. 条件渲染</h1>
+    <p>if</p>
+    <p v-if="ok">条件成功</p>
+    <p v-else>条件失败</p>
+    <p>show</p>
+    <p v-show="ok">show成功</p>
+    <p v-show="!ok">show失败</p>
+    <button @click="ok=!ok">切换</button>
 </div>
 </body>
 <script src="../js/vue.js" type="text/javascript"></script>
@@ -22,8 +104,66 @@
     const vm = new Vue({ //配置对象 options
         el: '#hello', //element: 指定用vue来管理哪个标签区域
         data: {
-            msg: 'nihao'
+            msg: 'nihao',
+            content: 'NBA I love game',
+            url: 'http://www.baidu.com',
+            firstName: 'A',
+            lastName: 'B',
+            fullName2: 'A-B',
+            myClass: 'classA',
+            hasClassA: true,
+            hasClassB: false,
+            activeColor: 'red',
+            fontSize: '20px',
+            ok:true
+        },
+        methods: {
+            test() {
+                alert('你好')
+            },
+            update(){
+                this.myClass = 'classB'
+                this.hasClassB = !this.hasClassB
+                this.hasClassA = !this.hasClassA
+                this.activeColor = 'yellow'
+                this.fontSize = '30px'
+            }
+        },
+        mounted() {
+        },
+        computed: {
+            //计算属性
+            fullName1(){
+                return `${this.firstName}-${this.lastName}`
+            },
+            //计算属性, 这里不可以与上面已经定义的数据重复, 上面的属性已经不可以重新定义.
+            // fullName2(){
+            //     return 'test'
+            // },
+            //计算属性高级
+            fullName3: {
+                get(){
+                    return `${this.firstName}-${this.lastName}`
+                },
+                set (value){
+                    console.log(value)
+                    const split = value.split('-');
+                    this.firstName = split[0]
+                    this.lastName = split[1]
+                }
+            }
+        },
+        watch: {
+            //监视属性
+            firstName(value){
+                this.fullName2 = `${this.firstName}-${this.lastName}`
+            }
         }
+    })
+
+    //监视属性
+    vm.$watch('lastName',function (value) {
+        this.fullName2 = `${this.firstName}-${this.lastName}`
     })
 </script>
 </html>
