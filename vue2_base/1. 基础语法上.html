@@ -51,6 +51,19 @@
   如果需要频繁切换 v-show 较好
 
 
+==============07_事件处理=====================
+1. 绑定监听:
+  v-on:xxx="fun"
+  @xxx="fun"
+  @xxx="fun(参数)"
+  默认事件形参: event
+  隐含属性对象: $event
+2. 事件修饰符:
+  .prevent : 阻止事件的默认行为 event.preventDefault()
+  .stop : 停止事件冒泡 event.stopPropagation()
+3. 按键修饰符
+  .keycode : 操作的是某个keycode值的健
+  .enter : 操作的是enter键
 -->
 <body>
 <div id="hello">
@@ -97,9 +110,60 @@
     <p v-show="ok">show成功</p>
     <p v-show="!ok">show失败</p>
     <button @click="ok=!ok">切换</button>
+
+    <h1>六. 列表渲染</h1>
+    <h2>1. v-for 遍历数组</h2>
+    <ul>
+        <li v-for="(p,index) in persons" :key="index">
+            {{index}}---{{p.name}}---{{p.age}}
+            ---<button @click="deleteP(index)">删除</button>
+            ---<button @click="updateP(index,{name:'Cat',age:11})">更新</button>
+        </li>
+    </ul>
+    <button @click="addP({name:'Z',age:1})">添加</button>
+    <h2>2. v-for 遍历对象</h2>
+    <ul>
+        <li v-for="(item,key) in persons[0]" :key="key">
+            {{key}}---{{item}}
+        </li>
+    </ul>
+    <h2>3. 过滤与排序</h2>
+    <input type="text" v-model = "searchName">
+    <ul>
+        <li v-for="(p,index) in filterPersons" :key="index">
+            {{index}}---{{p.name}}---{{p.age}}
+        </li>
+    </ul>
+    <button @click="setOrderType(2)">年龄升序</button>
+    <button @click="setOrderType(1)">年龄降序</button>
+    <button @click="setOrderType(0)">原本顺序</button>
+
+    <h1>七. 事件处理</h1>
+    <h2>1. 绑定监听</h2>
+    <button @click="test1">test1</button>
+    <button @click="test2('abc')">test2</button>
+    <button @click="test3('abcd',$event)">test3</button>
+    <h2>2. 事件修饰符</h2>
+    <a href="http://www.baidu.com" @click.prevent="test4">百度一下</a>
+
+    <div style="width: 300px;height: 300px;background: red" @click="test5">
+        out
+        <div style="width: 100px;height: 100px;background: blue" @click.stop="test6">
+            inner
+        </div>
+    </div>
+
+
+    <h2>3. 按键修饰符</h2>
+    <input type="text" @keyup.13="test7">
+    <input type="text" @keyup.enter="test7">
+
+
 </div>
+
+<br/><br/><br/><br/><br/>
 </body>
-<script src="../js/vue.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
 <script type="text/javascript">
     const vm = new Vue({ //配置对象 options
         el: '#hello', //element: 指定用vue来管理哪个标签区域
@@ -115,7 +179,15 @@
             hasClassB: false,
             activeColor: 'red',
             fontSize: '20px',
-            ok:true
+            orderType:0,
+            ok:true,
+            searchName: '',
+            persons: [
+                {name:'Tom',age:18},
+                {name:'Jack',age:17},
+                {name:'Bob',age:19},
+                {name:'Mary',age:16},
+            ]
         },
         methods: {
             test() {
@@ -127,6 +199,39 @@
                 this.hasClassA = !this.hasClassA
                 this.activeColor = 'yellow'
                 this.fontSize = '30px'
+            },
+            deleteP(index){
+               this.persons.splice(index,1)
+            },
+            updateP(index, newP) {
+                this.persons.splice(index,1,newP)
+            },
+            addP(newP){
+                this.persons.push(newP)
+            },
+            setOrderType(sort){
+                this.orderType=sort
+            },
+            test1(ev){
+                alert(ev.target.innerHTML)
+            },
+            test2(msg){
+                alert(msg)
+            },
+            test3(str,ev){
+                alert(str+'----'+ev.target.innerHTML)
+            },
+            test4(){
+                alert('点击了a')
+            },
+            test5(){
+                alert('out')
+            },
+            test6(){
+                alert('inner')
+            },
+            test7(event){
+                alert(event.target.value)
             }
         },
         mounted() {
@@ -151,6 +256,26 @@
                     this.firstName = split[0]
                     this.lastName = split[1]
                 }
+            },
+            filterPersons(){
+                const {searchName,persons,orderType} = this
+                let arr = [...persons]
+                if(searchName.trim()){
+                    arr = persons.filter(p=>p.name.indexOf(searchName)!==-1)
+                }
+
+                if(orderType){
+                    arr.sort(function (p1, p2) {
+                        if(orderType === 1){
+                            return p2.age-p1.age
+                        }else {
+                            return p1.age-p2.age
+                        }
+                    })
+                }
+
+                return arr
+
             }
         },
         watch: {

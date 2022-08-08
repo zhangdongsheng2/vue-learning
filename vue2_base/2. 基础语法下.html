@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VueHello</title>
+    <style>
+        .classA {
+            color: red;
+        }
+    </style>
+</head>
+<!--
+============08_表单输入绑定==================
+1. 使用v-model(双向数据绑定)自动收集数据
+  text/textarea
+  checkbox
+  radio
+  select
+==============09_Vue实例_生命周期=====================
+1. vue对象的生命周期
+  1). 初始化显示
+    * beforeCreate()
+    * created()
+    * beforeMount()
+    * mounted()
+  2). 更新状态
+    * beforeUpdate()
+    * updated()
+  3). 销毁vue实例: vm.$destory()
+    * beforeDestory()
+    * destoryed()
+2. 常用的生命周期方法
+  created()/mounted(): 发送ajax请求, 启动定时器等异步任务
+  beforeDestory(): 做收尾工作, 如: 清除定时器
+==========
+1. vue对象的生命周期
+  1). 初始化显示
+    * beforeCreate()
+    * created()
+    * beforeMount()
+    * mounted()
+  2). 更新状态
+    * beforeUpdate()
+    * updated()
+  3). 销毁vue实例: vm.$destory()
+    * beforeDestory()
+    * destoryed()
+2. 常用的生命周期方法
+  created()/mounted(): 发送ajax请求, 启动定时器等异步任务
+  beforeDestory(): 做收尾工作, 如: 清除定时器
+
+==============10_过渡&动画=====================
+
+
+
+-->
+<body>
+<div id="hello">
+    <h1>一. 表单输入绑定</h1>
+    用户名: <input type="text" v-model="username"><br/>
+    密码: <input type="password" v-model="pwd"><br/>
+    <span>性别: </span>
+    <input type="radio" value="女" v-model="sex">女
+    <input type="radio" value="男" v-model="sex">男<br/>
+    爱好: <input type="checkbox" value="basket" v-model="likes"><label>篮球</label>
+    <input type="checkbox" value="foot" v-model="likes"><label>足球</label>
+    <input type="checkbox" value="pingpang" v-model="likes"><label>乒乓</label><br/>
+    城市:
+    <select v-model="cityId">
+        <option>未选择</option>
+        <option :value="city.id" v-for="(city,index) in allCitys" :key="city.id">{{city.name}}</option>
+    </select><br/>
+    <span>介绍: </span>
+    <textarea rows="10" v-model="info"></textarea><br/><br/>
+    <button @click="handleSubmit">注册</button>
+
+
+    <h1>二. Vue实例_生命周期</h1>
+    <button @click="destroyVue">destory vue</button>
+    <p v-if="isShow">教育</p>
+
+
+</div>
+
+<br/><br/><br/><br/><br/>
+</body>
+<script src="js/vue.js" type="text/javascript"></script>
+<script type="text/javascript">
+    const vm = new Vue({ //配置对象 options
+        el: '#hello', //element: 指定用vue来管理哪个标签区域
+        data: {
+            username: '',
+            pwd: '',
+            sex: '男',
+            likes: ['foot'],
+            cityId: '2',
+            info: '',
+            allCitys: [{id: 1, name: 'BJ'}, {id: 2, name: 'SS'}, {id: 3, name: 'SZ'}],
+            isShow: true,
+            intervalId: 0
+        },
+        beforeCreate() {
+            console.log('beforeCreate()')
+        },
+        created() {
+            console.log('created()')
+        },
+        beforeMount() {
+            console.log('beforeMount()')
+        },
+        mounted() {
+            //执行异步操作
+            this.intervalId = setInterval(() => {
+                this.isShow = !this.isShow
+            }, 1000)
+        },
+        beforeUpdate() {
+            console.log('beforeUpdate()')
+        },
+        update() {
+            console.log('update()')
+        },
+        beforeDestroy() {
+            //执行收尾工作
+            clearInterval(this.intervalId)
+        },
+        destroyed() {
+            console.log('destroyed()')
+        },
+        methods: {
+            handleSubmit() {
+                console.log(this.username, this.pwd, this.likes, this.cityId, this.info)
+            },
+            destroyVue() {
+                this.$destroy()
+            }
+        },
+    })
+
+
+</script>
+</html>
