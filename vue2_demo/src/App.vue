@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <img class="logo" src="./assets/logo.png" alt="logo">
     <HelloWorld/>
   </div>
 </template>
@@ -17,12 +17,17 @@ export default {
 </script>
 
 <style>
+.logo{
+  width: 100px;
+  height: 100px;
+  text-align: center;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased; /*抗锯齿*/
+  -moz-osx-font-smoothing: grayscale; /*抗锯齿*/
   text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 </style>
