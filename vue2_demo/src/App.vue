@@ -1,33 +1,30 @@
 <template>
   <div id="app">
-    <img class="logo" src="./assets/logo.png" alt="logo">
-    <HelloWorld/>
+    <div>
+     <ul class="nav nav-tabs" v-show="true"> <!-- 暂时不显示路由导航 -->
+       <li v-for="(r,index) in routerList" :key="index">
+         <router-link :to="r.path">{{r.name}}</router-link>
+       </li>
+      </ul>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+
+import router from "./router";
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  computed: {
+    routerList(){
+      return router.getRoutes();
+    }
+  },
+  mounted() {
+    console.log( typeof  router.getRoutes())
   }
 }
 </script>
 
-<style>
-.logo{
-  width: 100px;
-  height: 100px;
-  text-align: center;
-}
-
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased; /*抗锯齿*/
-  -moz-osx-font-smoothing: grayscale; /*抗锯齿*/
-  text-align: center;
-  margin-top: 60px;
-}
-</style>
