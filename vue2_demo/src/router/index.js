@@ -10,7 +10,7 @@ import Message from '../pages/home/Message'
 import MessageDetail from '../pages/home/MessageDetail'
 import About from '../pages/About'
 import Hello from '../pages/Hello'
-
+import Todos1 from '../pages/Todos1'
 
 /*
 声明使用vue-router插件
@@ -56,6 +56,11 @@ export default new VueRouter(
         path: '/hello',
         component: Hello,
         name: 'Hello'
+      },
+      {
+        path: '/todos1',
+        component: Todos1,
+        name: 'Todos1'
       },
       {
         path: '/',
