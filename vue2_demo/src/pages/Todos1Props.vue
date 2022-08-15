@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import TodoHeader from "../components/todos1/TodoHeader";
-import TodoList from "../components/todos1/TodoList";
-import TodoFooter from "../components/todos1/TodoFooter";
+import TodoHeader from "../components/todos1_props/TodoHeader";
+import TodoList from "../components/todos1_props/TodoList";
+import TodoFooter from "../components/todos1_props/TodoFooter";
 import storageUtils from "../utils/storageUtils";
 
 export default {
