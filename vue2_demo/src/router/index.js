@@ -13,6 +13,7 @@ import Hello from '../pages/Hello'
 import Todos1 from '../pages/Todos1Props'
 import Todos2 from '../pages/Todos2PubSub'
 import Todos3 from '../pages/Todos3Slot'
+import Users from '../pages/Users'
 
 /*
 声明使用vue-router插件
@@ -73,6 +74,11 @@ export default new VueRouter(
         path: '/todos3_slot',
         component: Todos3,
         name: 'Todos3'
+      },
+      {
+        path: '/users',
+        component: Users,
+        name: 'users'
       },
       {
         path: '/',
