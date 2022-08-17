@@ -1,37 +1,22 @@
 <template>
-  <div class="todo-container">
-    <div class="todo-wrap">
-      <TodoHeader ></TodoHeader>
-      <todo-list ></todo-list>
-      <todo-footer ></todo-footer>
-    </div>
+  <div class="container">
+    <Search/>
+    <Main/>
   </div>
 </template>
 
 <script>
-import TodoHeader from "./components/TodoHeader";
-import TodoList from "./components/TodoList";
-import TodoFooter from "./components/TodoFooter";
+import Main from "./components/Main";
+import Search from "./components/Search";
 
 export default {
+  name: "Users",
   components: {
-    TodoHeader,
-    TodoList,
-    TodoFooter
+    Main,
+    Search,
   }
 }
 </script>
 
 <style scoped>
-.todo-container{
-  width: 600px;
-  margin: 0 auto;
-}
-.todo-wrap, .todo-container{
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-}
-
-
 </style>
