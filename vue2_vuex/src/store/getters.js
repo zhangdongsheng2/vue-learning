@@ -1,14 +1,11 @@
 export default {
-  cartProduts(state) {
-    return state.cart.items.map(({id, count}) => {
-      const p = state.products.products.find(p => p.id === id)
-      return {
-        id,
-        count,
-        title: p.title,
-        price: p.price
-      }
-
-    })
+  totalSize(state) {
+    return state.todos.length
+  },
+  completeSize(state){
+    return state.todos.reduce((preTotal, todo) => preTotal + (todo.complete ? 1 : 0), 0)
+  },
+  isAllSelect(state, getters) {
+    return getters.completeSize===getters.totalSize&&getters.completeSize>0
   }
 }

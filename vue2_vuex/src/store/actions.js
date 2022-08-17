@@ -1,11 +1,17 @@
-import * as types from './types'
-// import {ADD_TO_CART} from "./types";
+import * as types from './mutations-types'
 
 export  default {
-  addToCart({commit},p){
-    if(p.inventory){
-      commit(types.ADD_TO_CART,{id:p.id})
-    }
+  addTodo({commit},todo){
+    commit(types.ADD_TODO,{todo})
+  },
+  deleteTodo({commit},index){
+    commit(types.DELETE_TODO,{index})
+  },
+  selectAll({commit},isCheck){
+    commit(types.SELECT_ALL_TODOS,{isCheck})
+  },
+  deleteCompleteTodos({commit}){
+    commit(types.DELETE_COMPLETE_TODOS)
   }
 }
 

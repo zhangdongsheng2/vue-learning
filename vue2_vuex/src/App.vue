@@ -1,38 +1,37 @@
 <template>
-  <div >
-    <h1>Shopping Cart Example</h1>
-    <products></products>
-    <hr>
-    <cart></cart>
+  <div class="todo-container">
+    <div class="todo-wrap">
+      <TodoHeader ></TodoHeader>
+      <todo-list ></todo-list>
+      <todo-footer ></todo-footer>
+    </div>
   </div>
 </template>
 
 <script>
-import {mapState,mapGetters,mapActions} from 'vuex'
-import Products from "./components/Products";
-import Cart from "./components/Cart";
+import TodoHeader from "./components/TodoHeader";
+import TodoList from "./components/TodoList";
+import TodoFooter from "./components/TodoFooter";
 
 export default {
-  name: 'App',
-  components: {Products,Cart},
-  computed: {
-    // count () {
-    //   return this.$store.state.count
-    // },
-    // evenOrOdd () {
-    //   return this.$store.getters.evenOrOdd
-    // }
-    ...mapState(['count']),
-    ...mapGetters(['eventOrOdd'])
-  },
-  mounted() {
-    console.log(this.$store)
-    console.log(mapState)
-  },
-  methods: {
-    ...mapActions(['increment','decrement','incrementIfOdd','incrementAsync'])
+  components: {
+    TodoHeader,
+    TodoList,
+    TodoFooter
   }
-
 }
 </script>
 
+<style scoped>
+.todo-container{
+  width: 600px;
+  margin: 0 auto;
+}
+.todo-wrap, .todo-container{
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+
+</style>
