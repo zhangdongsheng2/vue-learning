@@ -2,7 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
+import App2 from './App2'
+import store from './store'
 
 Vue.config.productionTip = false
 
@@ -11,11 +12,16 @@ new Vue({
   el: '#app',
   components: { App },
   template: '<App/>',
-  router, //注册路由
+  store, //注册vuex的store, 所有组件多个属性$store
 })
 
 
-
+new Vue({
+  el: '#app2',
+  components: { App2 },
+  template: '<App2/>',
+  store, //注册vuex的store, 所有组件多个属性$store
+})
 
 
 

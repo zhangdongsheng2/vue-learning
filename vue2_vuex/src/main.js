@@ -2,19 +2,20 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
+import store from './store'
+import {currency} from './currency.js'
 
 Vue.config.productionTip = false
+
+Vue.filter('currency',currency)
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   components: { App },
   template: '<App/>',
-  router, //注册路由
+  store, //注册vuex的store, 所有组件多个属性$store
 })
-
-
 
 
 
