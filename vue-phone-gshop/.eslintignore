@@ -1,0 +1,11 @@
+src/assets
+public
+build/*.js
+/build/
+/config/
+dist
+/dist/
+/*.js
+/test/unit/coverage/
+*.js
+*.vue
