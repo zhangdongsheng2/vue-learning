@@ -2,13 +2,13 @@
   <footer class="footer_guide border-1px">
     <a href="javascript:;" class="guide_item" :class="{on: '/msite' === $route.path}" @click="goto('/msite')">
       <span class="item_icon">
-        <i class="iconfont icon-waimai"></i>
+        <i class="iconfont icon-zhuye"></i>
       </span>
       <span>外卖</span>
     </a>
     <a href="javascript:;" class="guide_item" :class="{on: '/search' === $route.path}" @click="goto('/search')">
       <span class="item_icon">
-        <i class="iconfont icon-search"></i>
+        <i class="iconfont icon-sousuoleimu"></i>
       </span>
       <span>搜索</span>
     </a>
@@ -20,7 +20,7 @@
     </a>
     <a href="javascript:;" class="guide_item" :class="{on: '/profile' === $route.path}" @click="goto('/profile')">
       <span class="item_icon">
-        <i class="iconfont icon-geren"></i>
+        <i class="iconfont icon-wode"></i>
       </span>
       <span>我的</span>
     </a>

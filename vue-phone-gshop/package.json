@@ -13,7 +13,8 @@
     "vue-axios": "^2.1.2",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
-    "classlist-polyfill": "^1.2.0"
+    "classlist-polyfill": "^1.2.0",
+    "swiper": "^4.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
