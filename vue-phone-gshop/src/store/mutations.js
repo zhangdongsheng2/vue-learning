@@ -2,7 +2,7 @@
 import {
     RECEIVE_ADDRESS,
     RECEIVE_CATEGORYS,
-    RECEIVE_SHOP
+    RECEIVE_SHOPS
 } from './mutation-types'
 
 import Vue from 'vue'
@@ -12,10 +12,10 @@ export default {
         state.address = address
     },
     [RECEIVE_CATEGORYS](state,{categorys}) {
-        state.categorys = category
+        state.categorys = categorys
     },
-    [RECEIVE_SHOP](state,{shops}) {
-        state.shops = address
+    [RECEIVE_SHOPS](state,{shops}) {
+        state.shops = shops
     },
 
 }

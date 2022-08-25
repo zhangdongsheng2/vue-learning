@@ -16,7 +16,8 @@
     "vue": "^2.6.14",
     "vue-axios": "^2.1.2",
     "vue-router": "^3.0.2",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "better-scroll": "^1.11.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
