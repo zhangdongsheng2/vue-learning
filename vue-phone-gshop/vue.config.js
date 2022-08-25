@@ -19,10 +19,11 @@ module.exports = defineConfig({
 
   // 配置转发代理
   devServer: {
+    host: '127.0.0.1',
     port: 9373,
     proxy: {
       '/api': {
-        target: "http://192.168.71.45:9379",
+        target: "http://127.0.0.1:9379",
         // ws: false, // 需要websocket 开启
         pathRewrite: {
           // '^/': '/'
