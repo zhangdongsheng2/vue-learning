@@ -2,12 +2,12 @@
   <section class="msite">
     <header-top :title="address.name">
       <template v-slot:left>
-            <span class="header_search"  >
+            <span class="header_search" @click="$router.replace('/search')" >
                    <i class="iconfont icon-sousuo"></i>
             </span>
       </template>
       <template v-slot:right>
-            <span class="header_login" >
+            <span class="header_login" @click="$router.push('/login')">
                   <span class="header_login_text">登录|注册</span>
             </span>
       </template>
