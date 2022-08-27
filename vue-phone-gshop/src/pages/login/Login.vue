@@ -4,16 +4,17 @@
       <div class="login_header">
         <h2 class="login_logo">硅谷外卖</h2>
         <div class="login_header_title">
-          <a href="javascript:;" class="on">短信登录</a>
-          <a href="javascript:;">密码登录</a>
+          <a href="javascript:;" :class="{on: loginWay}" @click="loginWay=true">短信登录</a>
+          <a href="javascript:;" :class="{on: !loginWay}" @click="loginWay=false">密码登录</a>
         </div>
       </div>
       <div class="login_content">
         <form>
-          <div class="on">
+          <div :class="{on: loginWay}" >
             <section class="login_message">
-              <input type="tel" maxlength="11" placeholder="手机号">
-              <button disabled="disabled" class="get_verification">获取验证码</button>
+              <input type="tel" maxlength="11" v-model="username" placeholder="手机号">
+              <button  class="get_verification right_phone" @click="getCode()">获取验证码</button>
+
             </section>
             <section class="login_verification">
               <input type="tel" maxlength="8" placeholder="验证码">
@@ -23,25 +24,25 @@
               <a href="javascript:;">《用户服务协议》</a>
             </section>
           </div>
-          <div>
+          <div :class="{on: !loginWay}" >
             <section>
               <section class="login_message">
-                <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
+                <input type="tel" v-model="username" maxlength="11" placeholder="手机/邮箱/用户名">
               </section>
               <section class="login_verification">
-                <input type="tel" maxlength="8" placeholder="密码">
+                <input type="tel" v-model="password" maxlength="8" placeholder="密码">
                 <div class="switch_button off">
                   <div class="switch_circle"></div>
                   <span class="switch_text">...</span>
                 </div>
               </section>
               <section class="login_message">
-                <input type="text" maxlength="11" placeholder="验证码">
-                <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                <input type="text" v-model="captcha" maxlength="11" placeholder="验证码">
+                <img class="get_verification" src="http://127.0.0.1:8082/api/captcha" @click="captchaGet()" ref="captcha" alt="captcha">
               </section>
             </section>
           </div>
-          <button class="login_submit">登录</button>
+          <button class="login_submit" @click="login()">登录</button>
         </form>
         <a href="javascript:;" class="about_us">关于我们</a>
       </div>
@@ -49,12 +50,66 @@
         <i class="iconfont icon-jiantou2"></i>
       </a>
     </div>
+
+    <AlertTip v-show="alertShow" :alertText="alertText" @closeTip="closeTip"></AlertTip>
   </section>
 </template>
 
 <script>
+import {reqSendCode, reqSmsLogin, reqPwdLogin} from '@/api'
+import AlertTip from "@/components/AlertTip";
+
 export default {
-  name: "Login"
+  name: "Login",
+  data(){
+    return {
+      loginWay: true, //true 代表短信登陆, false代表密码登陆.
+      username: '17717812656',
+      password: '123456',
+      captcha: '',
+      code: '',
+      computeTime: '',
+      showPwd: false,
+      alertText: '',
+      alertShow: false,
+    }
+  },
+  components:{
+    AlertTip
+  },
+  methods: {
+    async login(){
+
+      console.log(this.username,this.password,this.captcha)
+      const result = await reqPwdLogin(this.username,this.password,this.captcha)
+
+      if(result.code === 0){
+        const userInfo = result.data
+        this.$store.dispatch('recordUser',userInfo)
+        this.$router.replace('/profile')
+      }else {
+        this.alertShow = true
+        this.alertText = result.msg
+      }
+
+
+    },
+    captchaGet(){
+      this.$refs.captcha.src = 'http://127.0.0.1:8082/api/captcha?time='+new Date().getTime()
+    },
+    async getCode(){
+      const result = await reqSendCode(this.username)
+      if(result.code === 0){
+        result.data
+      }else {
+        this.alertShow = true
+        this.alertText = result.msg
+      }
+    },
+    closeTip(){
+      this.alertShow = false
+    }
+  }
 }
 </script>
 
@@ -118,6 +173,8 @@ export default {
               color #ccc
               font-size 14px
               background transparent
+              &.right_phone
+                color black
           .login_verification
             position relative
             margin-top 16px

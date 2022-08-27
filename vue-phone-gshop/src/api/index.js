@@ -15,5 +15,16 @@ export const reqFoodCategorys = () => ajax(`${BASE_URL}/index_category`)
 //3. 根据经纬度获取商铺列表
 export const reqShops = (longitude,latitude) => ajax(`${BASE_URL}/shops`,{longitude,latitude})
 
+//4. 密码登陆接口
+export const reqPwdLogin = (name,pwd,captcha) => ajax(`${BASE_URL}/login_pwd`,{name,pwd,captcha},'POST')
+
+//5. 短信登陆接口
+export const reqSmsLogin = (phone,code) => ajax(`${BASE_URL}/login_sms`,{phone,code},'POST')
+
+//6. 发送验证码接口
+export const reqSendCode = (phone) => ajax(`${BASE_URL}/sendcode`,{phone})
+
+
+
 
 

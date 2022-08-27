@@ -1,7 +1,7 @@
 import {
     RECEIVE_ADDRESS,
     RECEIVE_CATEGORYS,
-    RECEIVE_SHOPS
+    RECEIVE_SHOPS, RECEIVE_USERINFO
 } from './mutation-types'
 
 import {
@@ -37,7 +37,9 @@ export default {
             const shops = result.data
             commit(RECEIVE_SHOPS,{shops})
         }
+    },
+    recordUser({commit},userInfo){
+        commit(RECEIVE_USERINFO,{userInfo})
     }
-
 
 }
