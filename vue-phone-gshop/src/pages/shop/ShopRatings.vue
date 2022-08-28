@@ -1,5 +1,5 @@
 <template>
-
+<div>商家评价</div>
 </template>
 
 <script>

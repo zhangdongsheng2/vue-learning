@@ -1,7 +1,7 @@
 import {
     RECEIVE_ADDRESS,
-    RECEIVE_CATEGORYS, RECEIVE_SEARCH_SHOPS,
-    RECEIVE_SHOPS, RECEIVE_USERINFO
+    RECEIVE_CATEGORYS, RECEIVE_GOODS, RECEIVE_SEARCH_SHOPS,
+    RECEIVE_SHOPS, RECEIVE_SHOPS_INFO, RECEIVE_USERINFO
 } from './mutation-types'
 
 import {
@@ -9,7 +9,9 @@ import {
     reqFoodCategorys, reqLogout,
     reqShops,
     reqUserInfo,
-    reqSearchShops
+    reqSearchShops,
+    reqShopsInfo,
+    reqGoods
 } from '@/api'
 
 
@@ -59,6 +61,21 @@ export default {
         const result = await reqLogout()
         if(result.code === 0){
             commit(RECEIVE_USERINFO,{userInfo:{}})
+        }
+    },
+    async getShopsInfo({commit}){
+        const result = await reqShopsInfo()
+        if(result.code === 0){
+            const info = result.data
+            commit(RECEIVE_SHOPS_INFO,{info})
+        }
+    },
+    async getGoods({commit},callback){
+        const result = await reqGoods()
+        if(result.code === 0){
+            const goods = result.data
+            commit(RECEIVE_GOODS,{goods})
+            callback && callback()
         }
     },
     recordUser({commit},userInfo){

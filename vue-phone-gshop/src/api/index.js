@@ -34,5 +34,25 @@ export const reqLogout = () => ajax(`${BASE_URL}/logout`)
 export const reqSearchShops = (geohash,keyword) => ajax(`${BASE_URL}/search_shops`,{geohash,keyword})
 
 
+//获取商家信息
+export const reqShopsInfo = () => ajax(`/info`)
+
+
+//获取商品
+export const reqGoods = () => ajax(`/goods`)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

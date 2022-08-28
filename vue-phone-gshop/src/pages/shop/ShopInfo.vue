@@ -1,5 +1,5 @@
 <template>
-
+<div>商家详情</div>
 </template>
 
 <script>
