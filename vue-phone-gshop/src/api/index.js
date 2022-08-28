@@ -30,6 +30,8 @@ export const reqUserInfo = () => ajax(`${BASE_URL}/userinfo`)
 //8. 退出登陆
 export const reqLogout = () => ajax(`${BASE_URL}/logout`)
 
+//9. 搜索商家列表
+export const reqSearchShops = (geohash,keyword) => ajax(`${BASE_URL}/search_shops`,{geohash,keyword})
 
 
 

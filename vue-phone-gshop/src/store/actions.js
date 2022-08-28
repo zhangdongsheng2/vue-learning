@@ -1,6 +1,6 @@
 import {
     RECEIVE_ADDRESS,
-    RECEIVE_CATEGORYS,
+    RECEIVE_CATEGORYS, RECEIVE_SEARCH_SHOPS,
     RECEIVE_SHOPS, RECEIVE_USERINFO
 } from './mutation-types'
 
@@ -8,7 +8,8 @@ import {
     reqAddress,
     reqFoodCategorys, reqLogout,
     reqShops,
-    reqUserInfo
+    reqUserInfo,
+    reqSearchShops
 } from '@/api'
 
 
@@ -37,6 +38,14 @@ export default {
         if(result.code === 0){
             const shops = result.data
             commit(RECEIVE_SHOPS,{shops})
+        }
+    },
+    async getSearchShops({commit,state},keyword){
+        const geohash = state.latitude + ',' + state.longitude
+        const result = await reqSearchShops(geohash,keyword)
+        if(result.code === 0){
+            const searchShops = result.data
+            commit(RECEIVE_SEARCH_SHOPS,{searchShops})
         }
     },
     async getUserInfo({commit}){
