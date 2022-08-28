@@ -55,7 +55,7 @@ export default {
 
   .tip_text_container{
     transform-origin: 0 0;
-    animation tipMove 1s
+    animation tipMove .5s
     animation-fill-mode: both;
 
     width 60%

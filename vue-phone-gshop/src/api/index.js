@@ -24,6 +24,12 @@ export const reqSmsLogin = (phone,code) => ajax(`${BASE_URL}/login_sms`,{phone,c
 //6. 发送验证码接口
 export const reqSendCode = (phone) => ajax(`${BASE_URL}/sendcode`,{phone})
 
+//7. 获取用户信息
+export const reqUserInfo = () => ajax(`${BASE_URL}/userinfo`)
+
+//8. 退出登陆
+export const reqLogout = () => ajax(`${BASE_URL}/logout`)
+
 
 
 

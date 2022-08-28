@@ -13,11 +13,11 @@
           <div :class="{on: loginWay}" >
             <section class="login_message">
               <input type="tel" maxlength="11" v-model="username" placeholder="手机号">
-              <button  class="get_verification right_phone" @click="getCode()">获取验证码</button>
+              <button ref="textCode" class="get_verification right_phone" @click="getCode()">获取验证码</button>
 
             </section>
             <section class="login_verification">
-              <input type="tel" maxlength="8" placeholder="验证码">
+              <input type="tel" v-model="code"  maxlength="8" placeholder="验证码">
             </section>
             <section class="login_hint">
               温馨提示：未注册硅谷外卖帐号的手机号，登录时将自动注册，且代表已同意
@@ -79,35 +79,70 @@ export default {
   },
   methods: {
     async login(){
-
-      console.log(this.username,this.password,this.captcha)
-      const result = await reqPwdLogin(this.username,this.password,this.captcha)
-
-      if(result.code === 0){
-        const userInfo = result.data
-        this.$store.dispatch('recordUser',userInfo)
-        this.$router.replace('/profile')
+      if (this.loginWay) {
+        if (!this.username) {
+          this.showAlert('手机号必须输入')
+        }else if (!/^\d{6}$/.test(this.code)) {
+          this.showAlert('验证码必须为六位数字')
+        }
+        const result = await reqSmsLogin(this.username,this.code);
+        if(result.code === 0){
+          const userInfo = result.data
+          await this.$store.dispatch('recordUser', userInfo)
+          await this.$router.replace('/profile')
+        }else {
+          this.showAlert(result.msg)
+        }
       }else {
-        this.alertShow = true
-        this.alertText = result.msg
-      }
+        if (!this.username) {
+          this.showAlert('用户名必须输入')
+        }else if (!this.password) {
+          this.showAlert('password必须输入')
+        }else if (!this.captcha) {
+          this.showAlert('验证码必须输入')
+        }
 
+        const result = await reqPwdLogin(this.username,this.password,this.captcha);
+        if(result.code === 0){
+          const userInfo = result.data
+          await this.$store.dispatch('recordUser', userInfo)
+          await this.$router.replace('/profile')
+        }else {
+          this.showAlert(result.msg)
+        }
+      }
 
     },
     captchaGet(){
       this.$refs.captcha.src = 'http://127.0.0.1:8082/api/captcha?time='+new Date().getTime()
     },
     async getCode(){
+      if (this.num) {
+        return
+      }
+
       const result = await reqSendCode(this.username)
       if(result.code === 0){
-        result.data
+        this.num = 30;
+        const interNum = setInterval(()=>{
+          this.num --
+          this.$refs.textCode.innerHTML=this.num + '秒'
+          if (!this.num) {
+            this.$refs.textCode.innerHTML='获取验证码'
+            clearInterval(interNum)
+          }
+        },1000)
+
       }else {
-        this.alertShow = true
-        this.alertText = result.msg
+        this.showAlert(result.msg)
       }
     },
     closeTip(){
       this.alertShow = false
+    },
+    showAlert(msg){
+      this.alertShow = true
+      this.alertText = msg
     }
   }
 }

@@ -15,6 +15,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getAddress',{latitude:40.10038 , longitude:116.36867})
+    this.$store.dispatch('getUserInfo')
   },
   /**
    * 1. 验证码登陆api.

@@ -7,9 +7,15 @@
             </span>
       </template>
       <template v-slot:right>
-            <span class="header_login" @click="$router.push('/login')">
+        <router-link :to="userInfo._id?'/userinfo':'/login'">
+             <span v-if="!userInfo._id" class="header_login">
                   <span class="header_login_text">登录|注册</span>
             </span>
+            <span v-else class="header_login">
+                  <span class="iconfont icon-person"></span>
+            </span>
+        </router-link>
+
       </template>
     </header-top>
     <!--首页导航-->
@@ -68,7 +74,7 @@ export default {
 
   },
   computed: {
-    ...mapState(['shops','categorys','address']),
+    ...mapState(['shops','categorys','address',"userInfo"]),
     categoryArr(){
       const {categorys} = this
       const arr1 = categorys.filter((value, index)=>index < 8)

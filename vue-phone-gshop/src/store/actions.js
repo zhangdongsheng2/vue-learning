@@ -6,8 +6,9 @@ import {
 
 import {
     reqAddress,
-    reqFoodCategorys,
-    reqShops
+    reqFoodCategorys, reqLogout,
+    reqShops,
+    reqUserInfo
 } from '@/api'
 
 
@@ -36,6 +37,19 @@ export default {
         if(result.code === 0){
             const shops = result.data
             commit(RECEIVE_SHOPS,{shops})
+        }
+    },
+    async getUserInfo({commit}){
+        const result = await reqUserInfo()
+        if(result.code === 0){
+            const userInfo = result.data
+            commit(RECEIVE_USERINFO,{userInfo})
+        }
+    },
+    async getLogout({commit}){
+        const result = await reqLogout()
+        if(result.code === 0){
+            commit(RECEIVE_USERINFO,{userInfo:{}})
         }
     },
     recordUser({commit},userInfo){
