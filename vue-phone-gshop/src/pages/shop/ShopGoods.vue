@@ -47,23 +47,79 @@
 
 <script>
 import {mapState} from "vuex";
+import BScroll from "better-scroll";
 
+/**
+ * 1. 获取商品数据.
+ * 2. 商品数据渲染到左右两侧的滑屏.
+ * 3. 商品分类对应 商品数据的滑动位置, 数据整理.
+ * 4. 分类与商品联动.
+ * 5. 商品详情组件.
+ * 6. 加号数字组件.
+ * 7. 购物车组件.
+ */
 export default {
   name: "ShopGoods",
+  data(){
+    return {
+      scrollY: 0,
+      food: {},
+      tops: []
+    }
+  },
   mounted() {
     this.$store.dispatch('getGoods',()=>{
+
+      this.$nextTick(()=>{
+        this._initScroll()
+        this._initTop()
+      })
 
     })
   },
   computed: {
     ...mapState(['goods', 'categorys']),
     currentIndex(){
-      return 2
+      let index = 0
+      for (let i = 0; i < this.tops.length; i++) {
+        index = i
+        if(this.tops[i] > this.scrollY) break
+      }
+      return index
     }
   },
   methods:{
     clickMenuItem(index){
-      console.log(index)
+      this.scrollY = this.tops[index-1]
+      this.foodScroll.scrollTo(0,-this.scrollY,300)
+    },
+    _initScroll(){
+      const menuScroll = new BScroll('.menu-wrapper',{
+        click: true
+      })
+
+      this.foodScroll = new BScroll('.foods-wrapper',{
+        probeType: 2,
+        click: true
+      })
+
+      this.foodScroll.on('scrollEnd',({x,y})=>{
+        console.log('scrollEnd',x,y)
+        this.scrollY = Math.abs(y)
+      })
+
+    },
+    _initTop(){
+      const tops = []
+      let top = 0
+
+      const foodEl = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
+      for (let i = 0; i < foodEl.length; i++) {
+        const clientHeight = foodEl[i].clientHeight;
+        top += clientHeight
+        tops.push(top)
+      }
+      this.tops = tops
     }
   }
 }
