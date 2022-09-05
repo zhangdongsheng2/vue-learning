@@ -1,30 +1,33 @@
 <template>
-<div v-show="isShow" class="shop_food">
-  <div class="header">
-    <img class="header_image" src="http://fuss10.elemecdn.com/8/a6/453f65f16b1391942af11511b7a90jpeg.jpeg"/>
-    <div class="back">
+<div v-show="isShow" class="shop_food" @click="toggleShow()">
+  <div class="header" @click.stop>
+    <img class="header_image" v-lazy="food.image"/>
+    <div class="back" @click.stop="toggleShow">
       <span class="iconfont icon-arrow_left"></span>
     </div>
-    <p class="desc">详情简介</p>
+    <p class="desc">{{ food.info }}</p>
   </div>
-  <div class="content_food">
-    <h3 class="title_food">商品名称</h3>
+  <div class="content_food" @click.stop>
+    <h3 class="title_food">{{ food.name }}</h3>
     <div class="orders_food">
-      <span>乐手xxx</span>
-      <span>好评率</span>
+      <span>月售{{food.sellCount}}</span>
+      <span>好评率{{food.rating}}%</span>
     </div>
     <div class="price" >
-      <span>1313</span>
-      <span>+</span>
+      <span class="left">{{food.price}}元</span>
+      <div class="right">
+        <cart-control :food="food"></cart-control>
+      </div>
     </div>
   </div>
-
 </div>
 </template>
 
 <script>
+import CartControl from "@/components/CartControl";
 export default {
   name: "Food",
+  components: {CartControl},
   props: {
     food: Object
   },
@@ -109,7 +112,6 @@ export default {
       span:nth-of-type(2){
         font-size: 10px
         color: #93999f
-
       }
     }
     .price{
@@ -117,12 +119,12 @@ export default {
       clearFix()
       block-size border
 
-      span:nth-of-type(1){
+      .left{
         color #f01414
         float left
         padding-left 15px
       }
-      span:nth-of-type(2){
+      .right{
         color #02a774
         float right
         padding-right 15px

@@ -1,7 +1,13 @@
 import {
     RECEIVE_ADDRESS,
-    RECEIVE_CATEGORYS, RECEIVE_GOODS, RECEIVE_SEARCH_SHOPS,
-    RECEIVE_SHOPS, RECEIVE_SHOPS_INFO, RECEIVE_USERINFO
+    RECEIVE_CATEGORYS,
+    RECEIVE_GOODS,
+    RECEIVE_SEARCH_SHOPS,
+    RECEIVE_SHOPS,
+    RECEIVE_SHOPS_INFO,
+    RECEIVE_USERINFO,
+    RECEIVE_FOOD_INCREASE,
+    RECEIVE_FOOD_DECREASE, RECEIVE_CLEAR_CART, RECEIVE_RATINGS
 } from './mutation-types'
 
 import {
@@ -11,7 +17,7 @@ import {
     reqUserInfo,
     reqSearchShops,
     reqShopsInfo,
-    reqGoods
+    reqGoods, reqShopRatings
 } from '@/api'
 
 
@@ -78,8 +84,26 @@ export default {
             callback && callback()
         }
     },
+    async getRatings({commit},callback){
+        const result = await reqShopRatings()
+        if(result.code === 0){
+            const ratings = result.data
+            commit(RECEIVE_RATINGS,{ratings})
+            callback && callback()
+        }
+    },
     recordUser({commit},userInfo){
         commit(RECEIVE_USERINFO,{userInfo})
-    }
+    },
 
+    updateFoodCount({commit},{isAdd,food}){
+        if(isAdd){
+            commit(RECEIVE_FOOD_INCREASE,{food})
+        }else {
+            commit(RECEIVE_FOOD_DECREASE,{food})
+        }
+    },
+    clearCart({commit}){
+        commit(RECEIVE_CLEAR_CART)
+    },
 }

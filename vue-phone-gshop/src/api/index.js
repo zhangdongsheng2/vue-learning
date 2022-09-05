@@ -41,6 +41,12 @@ export const reqShopsInfo = () => ajax(`/info`)
 //获取商品
 export const reqGoods = () => ajax(`/goods`)
 
+/**
+ * 获取商家评价数组
+ */
+export const reqShopRatings = () => ajax('/ratings')
+
+
 
 
 

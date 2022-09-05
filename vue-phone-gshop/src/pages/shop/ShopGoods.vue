@@ -16,7 +16,7 @@
         <li class="food-list-hook" v-for="(good,index) in goods" :key="index">
           <h1 class="title">{{good.name}}</h1>
           <ul>
-            <li class="food-item bottom-border-1px" v-for="(food,index) in good.foods" @click="toggleFood">
+            <li class="food-item bottom-border-1px" v-for="(food,index) in good.foods" @click="toggleFood(food)">
               <div class="icon">
                 <img width="57" height="57"
                      :src="food.icon">
@@ -32,7 +32,7 @@
                   <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
-                  CartControl
+                  <CartControl :food='food'></CartControl>
                 </div>
               </div>
             </li>
@@ -44,6 +44,7 @@
 
     </div>
   </div>
+  <shot-cart></shot-cart>
 
 </div>
 </template>
@@ -52,6 +53,8 @@
 import {mapState} from "vuex";
 import BScroll from "better-scroll";
 import Food from "@/components/Food";
+import CartControl from "@/components/CartControl";
+import ShotCart from "@/components/ShotCart";
 
 /**
  * 1. 获取商品数据.
@@ -125,12 +128,15 @@ export default {
       }
       this.tops = tops
     },
-    toggleFood(){
+    toggleFood(food){
+      this.food = food
       this.$refs.foodRef.toggleShow()
     }
   },
   components: {
-    Food
+    Food,
+    CartControl,
+    ShotCart
   }
 }
 </script>

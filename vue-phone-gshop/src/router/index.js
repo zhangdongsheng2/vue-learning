@@ -10,6 +10,7 @@ Vue.use(VueRouter)
 // import MSite from '../pages/home/Msite.vue'
 // import Search from '../pages/home/Search'
 
+//路由组件懒加载
 // const MSite = () => import('../pages/home/MSite.vue')
 // const Search = () => import('../pages/home/Search.vue')
 
@@ -20,7 +21,7 @@ export default new VueRouter({
   routes: [
     {
       path: '/msite',
-      component: () => import('@/pages/home/Msite'),
+      component: () => import('@/pages/home/Msite'), //路由组件懒加载
       meta: {
         showFooter: true
       }

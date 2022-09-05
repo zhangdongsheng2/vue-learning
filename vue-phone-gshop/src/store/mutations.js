@@ -4,7 +4,11 @@ import {
     RECEIVE_CATEGORYS,
     RECEIVE_SHOPS,
     RECEIVE_USERINFO,
-    RECEIVE_SEARCH_SHOPS, RECEIVE_SHOPS_INFO, RECEIVE_GOODS
+    RECEIVE_SEARCH_SHOPS,
+    RECEIVE_SHOPS_INFO,
+    RECEIVE_GOODS,
+    RECEIVE_FOOD_INCREASE,
+    RECEIVE_FOOD_DECREASE, RECEIVE_CLEAR_CART, RECEIVE_RATINGS
 } from './mutation-types'
 
 import Vue from 'vue'
@@ -30,6 +34,27 @@ export default {
     },
     [RECEIVE_GOODS](state,{goods}) {
         state.goods = goods
+    },
+    [RECEIVE_FOOD_DECREASE](state,{food}) {
+        food.count--
+        if (!food.count) {
+           state.cartFoods.splice(state.cartFoods.indexOf(food),1)
+        }
+    },
+    [RECEIVE_FOOD_INCREASE](state,{food}) {
+        if(!food.count){
+            Vue.set(food,'count',1)
+            state.cartFoods.push(food)
+        }else {
+            food.count ++
+        }
+    },
+    [RECEIVE_CLEAR_CART](state) {
+        state.cartFoods.forEach(value => value.count = 0)
+        state.cartFoods = []
+    },
+    [RECEIVE_RATINGS](state,{ratings}) {
+        state.ratings = ratings
     },
 }
 

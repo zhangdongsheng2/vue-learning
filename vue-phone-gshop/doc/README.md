@@ -154,4 +154,4 @@ this.$set(obj, 'xxx', value)才有数据绑定
 1). 缓存路由组件对象
 2). 路由组件懒加载
 3). 图片司加载: vue-lazyload
-4). 分析打包文件并优化
+4). 分析打包文件并优化-打包后会有个 report.html 可以显示包的占用大小: npm run build -- --report 
