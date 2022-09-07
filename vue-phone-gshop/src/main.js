@@ -10,6 +10,11 @@ import VueLazyload from "vue-lazyload";
 import loading from '../src/common/imgs/loading.gif'
 import './fiters'
 
+//将三级联动组件注册为全局组件
+import Star from '@/components/Star/Star';
+//第一个参数：全局组件名字，第二个参数：全局组件
+Vue.component(Star.name,Star);
+
 Vue.component(Button.name, Button)
 
 Vue.config.productionTip = false

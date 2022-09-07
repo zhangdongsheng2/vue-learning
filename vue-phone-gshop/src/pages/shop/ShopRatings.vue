@@ -72,7 +72,8 @@
 </template>
 
 <script>
-import Star from "@/components/Star/Star";
+//main.js 全局注册
+// import Star from "@/components/Star/Star";
 import BScroll from "better-scroll";
 import {mapState, mapActions} from 'vuex'
 
@@ -85,7 +86,7 @@ export default {
     }
   },
   components: {
-    Star
+    // Star
   },
   computed: {
     ...mapState(['ratings', 'categorys', 'address', "userInfo"]),
