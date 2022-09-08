@@ -61,6 +61,9 @@ import HeaderTop from '../../components/HeaderTop'
 import {mapState,mapActions} from 'vuex'
 import ShopList from "@/components/ShopList/ShopList";
 
+import {throttle} from 'lodash'
+
+
 export default {
   name: "Msite",
   data(){
@@ -72,6 +75,12 @@ export default {
     this.$store.dispatch('getFoodCategorys')
     this.$store.dispatch('getShops')
 
+  },
+  methods:{
+    //采用键值对形式创建函数，将changeIndex定义为节流函数，该函数触发很频繁时，设置50ms才会执行一次
+    changeIndex: throttle(function (index){
+      this.currentIndex = index
+    },50),
   },
   computed: {
     ...mapState(['shops','categorys','address',"userInfo"]),
