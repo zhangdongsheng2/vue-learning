@@ -38,7 +38,7 @@
               </section>
               <section class="login_message">
                 <input type="text" v-model="captcha" maxlength="11" placeholder="验证码">
-                <img class="get_verification" src="http://127.0.0.1:8082/api/captcha" @click="captchaGet()" ref="captcha" alt="captcha">
+                <img class="get_verification" src="http://127.0.0.1:9373/api/captcha" @click="captchaGet()" ref="captcha" alt="captcha">
               </section>
             </section>
           </div>
@@ -114,7 +114,7 @@ export default {
 
     },
     captchaGet(){
-      this.$refs.captcha.src = 'http://127.0.0.1:8082/api/captcha?time='+new Date().getTime()
+      this.$refs.captcha.src = 'http://127.0.0.1:9373/api/captcha?time='+new Date().getTime()
     },
     async getCode(){
       if (this.num) {
