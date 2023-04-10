@@ -14,6 +14,7 @@ import Todos1 from '../pages/Todos1Props'
 import Todos2 from '../pages/Todos2PubSub'
 import Todos3 from '../pages/Todos3Slot'
 import Users from '../pages/Users'
+import Heatmap from '../pages/Heatmap'
 
 /*
 声明使用vue-router插件
@@ -79,6 +80,11 @@ export default new VueRouter(
         path: '/users',
         component: Users,
         name: 'users'
+      },
+      {
+        path: '/heatmap',
+        component: Heatmap,
+        name: 'heatmap'
       },
       {
         path: '/',
